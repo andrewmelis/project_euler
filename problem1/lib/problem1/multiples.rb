@@ -2,7 +2,7 @@ class Multiples
   def self.generate(start,limit)
     a = []
     counter = start
-    while counter <= limit do 
+    while counter < limit do 
       a << counter if counter % start == 0
       counter += start
     end
