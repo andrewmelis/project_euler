@@ -1,27 +1,31 @@
 require 'spec_helper'
 
-describe FibSolver do
-  describe "#generate(limit)" do
+describe Fibonacci do
+  let(:first_10_fib) { Fibonacci.new.take_while { |term| term <= 10} }
+
+  context "sequence generation" do
     it "generates the terms of the fibonacci sequence <= the input limit" do
-      expect(FibSolver.generate(10)).to eq([1,2,3,5,8])
+      expect(first_10_fib).to eq([0,1,1,2,3,5,8])
     end
   end
 
-  describe "#evens(limit)" do
-    it "generates the even terms <= input limit" do
-      expect(FibSolver.evens(10)).to eq([2,8])
-    end
-  end
+  context "evens" do
+    let(:evens) { first_10_fib.select { |term| term.even? } }
 
-  describe "#sum_evens(limit)" do
-    it "sums an input list of evens" do
-      expect(FibSolver.sum_evens(10)).to eq(10)
+    it "generates the even terms <= 10" do
+      expect(evens).to eq([0,2,8])
+    end
+
+    it "sums the evens <= 10" do
+      expect(evens.inject(:+)).to eq(10)
     end
 
     it "correctly sums even fibonacci numbers <= 4,000,000" do
-      expect(FibSolver.sum_evens(4000000)).to eq(4613732)
+      upto_4_mil = Fibonacci.new.take_while { |term| term <= 4000000 }.select { |term| term.even? }.inject(:+)
+      expect(upto_4_mil).to eq(4613732)
     end
+
   end
-      
-  
+
+
 end

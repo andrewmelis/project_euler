@@ -1,1 +1,1 @@
-require 'fibsolver'
+require 'fibonacci'
