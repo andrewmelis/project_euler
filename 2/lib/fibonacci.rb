@@ -1,25 +1,32 @@
 class Fibonacci
+  include Enumerable
 
-  def self.generate(limit)
-    terms = [1,2]
+  def self.each
+    return enum_for(:each) unless block_given? #why need block given?
 
-    terms.each_with_index do |object, index|
-      if index > 0 
-	next_term = terms[index-1] + object
-	if next_term < limit
-	  terms << next_term
-	end
-      end
+    #init
+    f1, f2 = 0,1
+    loop do
+    #while f1 <= limit do 
+      #return
+      yield f1
+      #advance
+      f1, f2 = f2, f1+f2
     end
   end
+  
 
-  def self.evens(limit)
-    generate(limit).select do |term|
-       term % 2 == 0
-    end
-  end
+  #def each
+  #  return enum_for(:each) unless block_given?
 
-  def self.sum_evens(limit)
-    evens(limit).inject(0,:+)
-  end
+  #  fib = Enumerator.new do |y|
+  #    a = b = 1
+  #    loop {
+  #      #puts a
+  #      y.yield(a)
+  #      a, b = b, a+b
+  #    }
+  #  end
+  #end
+
 end
