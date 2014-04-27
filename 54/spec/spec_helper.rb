@@ -1,1 +1,3 @@
-require 'parser'
+require 'game'
+require 'hand'
+require 'card'
