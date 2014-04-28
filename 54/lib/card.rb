@@ -29,19 +29,19 @@ class Card
   end
 
   def club?
-    false unless suit.casecmp("c")
+    @suit.casecmp("c")
   end
 
   def diamond?
-    false unless suit.casecmp("d")
+    @suit.casecmp("d")
   end
 
   def heart?
-    false unless suit.casecmp("h")
+    @suit.casecmp("h")
   end
 
   def spade?
-    false unless suit.casecmp("s")
+    @suit.casecmp("s")
   end
 
   def <=>(anOther)
@@ -49,7 +49,7 @@ class Card
   end
 
   def to_s
-    rank+suit
+     "#{@rank}#{@suit}"
   end
 
   def inspect

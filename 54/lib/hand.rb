@@ -29,15 +29,24 @@ class Hand
   end
 
   def flush?
-    @cards.all? {|card| card.club?}    || 
-    @cards.all? {|card| card.diamond?} || 
-    @cards.all? {|card| card.heart?}   || 
-    @cards.all? {|card| card.spade?} 
+    if @cards.all? {|card| card.club?} 
+      puts "clubs"
+      return true
+    elsif @cards.all? {|card| card.diamond?} 
+      puts "diamond"
+      return true
+    elsif @cards.all? {|card| card.heart?}   
+      puts "heart"
+      return true
+    elsif @cards.all? {|card| card.spade?} 
+      puts "spade"
+      return true
+    else false
+    end
   end
 
   def straight?
     @cards.sort.each_cons(2).all? {|x,y| y.rank == x.rank+1}
-    #@cards.sort{|x,y| x.rank <=> y.rank}.each_cons(2).all? {|x,y| y.rank == x.rank+1}
   end
 
   def to_s

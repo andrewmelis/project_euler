@@ -76,7 +76,13 @@ describe Card do
       end
     end
 
-  end
+    describe "#to_s" do
+      it "prints out the proper string for face cards" do
+	pending "figure out constant name value lookup"
+	expect(Card.new("As")).to eq("As")
+      end
+    end
 
+  end
 
 end
