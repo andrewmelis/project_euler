@@ -29,23 +29,28 @@ class Card
   end
 
   def club?
-    @suit.casecmp("c")
+    @suit.eql?("c")
   end
 
   def diamond?
-    @suit.casecmp("d")
+    @suit.eql?("d")
   end
 
   def heart?
-    @suit.casecmp("h")
+    @suit.eql?("h")
   end
 
   def spade?
-    @suit.casecmp("s")
+    @suit.eql?("s")
   end
 
   def <=>(anOther)
-    @rank <=> anOther.rank
+    if anOther.class == Card
+      @rank <=> anOther.rank
+    elsif anOther.class == Fixnum
+      @rank <=> anOther
+    else raise RuntimeError, "incompatible comparison"
+    end
   end
 
   def to_s

@@ -42,7 +42,15 @@ describe Hand do
     end
 
     it "identifies 4 of a kind" do
-      pending
+      cards << Card.new("9d")
+      cards << Card.new("9C")
+      cards << Card.new("9s")
+      cards << Card.new("8C")
+      cards << Card.new("9h")
+      hand = Hand.new(cards: cards)
+
+      expect(hand.rank).to eq(HandRanks::FOUR_OF_A_KIND)
+
     end
 
     it "identifies full house" do
@@ -60,12 +68,23 @@ describe Hand do
       expect(hand.rank).to eq(HandRanks::FLUSH)
     end
 
-    it "identifies straight" do
-      cards << Card.new("JH")
+    it "identifies ace-high straight" do
+      cards << Card.new("AH")
+      cards << Card.new("KC")
+      cards << Card.new("QC")
+      cards << Card.new("JC")
       cards << Card.new("TC")
-      cards << Card.new("9C")
-      cards << Card.new("8C")
-      cards << Card.new("7C")
+
+      hand = Hand.new(cards: cards)
+
+      expect(hand.rank).to eq(HandRanks::STRAIGHT)
+    end
+    it "identifies ace-low straight" do
+      cards << Card.new("AH")
+      cards << Card.new("2C")
+      cards << Card.new("3C")
+      cards << Card.new("4C")
+      cards << Card.new("5C")
 
       hand = Hand.new(cards: cards)
 
