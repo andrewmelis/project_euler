@@ -24,7 +24,7 @@ class Game
 
   def winner?
     validate_game_size
-    @hands.max
+    @hands.max.player_number
   end
 
   def validate_game_size

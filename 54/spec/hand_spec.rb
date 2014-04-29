@@ -17,17 +17,6 @@ describe Hand do
 
   end
 
-  describe "#<=>" do
-    it "compares hand ranks" do
-      pending "implement rank comparison"
-
-      loser = Hand.new(cards: sample_loser, player_number: 1)
-      winner = Hand.new(cards: sample_winner, player_number: 2)
-
-      expect(loser < winner).to be_true
-    end
-  end
-
   describe "#evaluate" do
     let(:cards) {cards = []}
     it "identifies straight flush" do
@@ -50,11 +39,17 @@ describe Hand do
       hand = Hand.new(cards: cards)
 
       expect(hand.rank).to eq(HandRanks::FOUR_OF_A_KIND)
-
     end
 
     it "identifies full house" do
-      pending
+      cards << Card.new("9d")
+      cards << Card.new("8C")
+      cards << Card.new("9s")
+      cards << Card.new("8d")
+      cards << Card.new("9h")
+      hand = Hand.new(cards: cards)
+
+      expect(hand.rank).to eq(HandRanks::FULL_HOUSE)
     end
 
     it "identifies flush" do
@@ -68,27 +63,78 @@ describe Hand do
       expect(hand.rank).to eq(HandRanks::FLUSH)
     end
 
-    it "identifies ace-high straight" do
-      cards << Card.new("AH")
-      cards << Card.new("KC")
-      cards << Card.new("QC")
-      cards << Card.new("JC")
-      cards << Card.new("TC")
+    context "identifies straights" do
+      it "ace-high" do
+	cards << Card.new("AH")
+	cards << Card.new("KC")
+	cards << Card.new("QC")
+	cards << Card.new("JC")
+	cards << Card.new("TC")
 
-      hand = Hand.new(cards: cards)
+	hand = Hand.new(cards: cards)
 
-      expect(hand.rank).to eq(HandRanks::STRAIGHT)
+	expect(hand.rank).to eq(HandRanks::STRAIGHT)
+      end
+      it "ace-low" do
+	cards << Card.new("AH")
+	cards << Card.new("2C")
+	cards << Card.new("3C")
+	cards << Card.new("4C")
+	cards << Card.new("5C")
+
+	hand = Hand.new(cards: cards)
+
+	expect(hand.rank).to eq(HandRanks::STRAIGHT)
+      end
     end
-    it "identifies ace-low straight" do
+
+    it "identifies three of a kind" do
       cards << Card.new("AH")
-      cards << Card.new("2C")
       cards << Card.new("3C")
-      cards << Card.new("4C")
-      cards << Card.new("5C")
+      cards << Card.new("As")
+      cards << Card.new("5D")
+      cards << Card.new("AC")
 
       hand = Hand.new(cards: cards)
 
-      expect(hand.rank).to eq(HandRanks::STRAIGHT)
+      expect(hand.rank).to eq(HandRanks::THREE_OF_A_KIND)
+    end
+
+    it "identifies two pair" do
+      cards << Card.new("AH")
+      cards << Card.new("3C")
+      cards << Card.new("As")
+      cards << Card.new("5D")
+      cards << Card.new("3s")
+
+      hand = Hand.new(cards: cards)
+
+      expect(hand.rank).to eq(HandRanks::TWO_PAIR)
+    end
+
+    it "identifies pair" do
+      cards << Card.new("AH")
+      cards << Card.new("3C")
+      cards << Card.new("As")
+      cards << Card.new("5D")
+      cards << Card.new("4s")
+
+      hand = Hand.new(cards: cards)
+
+      expect(hand.rank).to eq(HandRanks::PAIR)
+    end
+  end
+
+  describe "#<=>" do
+    it "compares hand ranks" do
+      loser = Hand.new(cards: sample_loser, player_number: 1)
+      winner = Hand.new(cards: sample_winner, player_number: 2)
+
+      expect(loser < winner).to be_true
+    end
+
+    it "breaks ties properly" do
+      pending "implement tiebreak logic"
     end
   end
 

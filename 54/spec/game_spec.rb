@@ -64,7 +64,7 @@ describe Game do
   describe "#winner?" do
     context "valid game" do
       it "returns the player number with the greatest ranking hand" do
-	pending "implement hand comparable"
+	pending "tiebreak logic"
 	game = Game.new(ten_cards)
 	expect(game.winner?).to eq(2)
       end
