@@ -20,107 +20,49 @@ describe Hand do
   describe "#evaluate" do
     let(:cards) {cards = []}
     it "identifies straight flush" do
-      cards << Card.new("JC")
-      cards << Card.new("TC")
-      cards << Card.new("9C")
-      cards << Card.new("8C")
-      cards << Card.new("7C")
-      hand = Hand.new(cards: cards)
-
+      hand = hand_from_string("TC Jc 8c 7C 9C")
       expect(hand.rank).to eq(HandRanks::STRAIGHT_FLUSH)
     end
 
     it "identifies 4 of a kind" do
-      cards << Card.new("9d")
-      cards << Card.new("9C")
-      cards << Card.new("9s")
-      cards << Card.new("8C")
-      cards << Card.new("9h")
-      hand = Hand.new(cards: cards)
-
+      hand = hand_from_string("9d 9C 8C 9s 9h")
       expect(hand.rank).to eq(HandRanks::FOUR_OF_A_KIND)
     end
 
     it "identifies full house" do
-      cards << Card.new("9d")
-      cards << Card.new("8C")
-      cards << Card.new("9s")
-      cards << Card.new("8d")
-      cards << Card.new("9h")
-      hand = Hand.new(cards: cards)
-
+      hand = hand_from_string("9d 8c 9s 8d 9h")
       expect(hand.rank).to eq(HandRanks::FULL_HOUSE)
     end
 
     it "identifies flush" do
-      cards << Card.new("QC")
-      cards << Card.new("TC")
-      cards << Card.new("9C")
-      cards << Card.new("8C")
-      cards << Card.new("7C")
-      hand = Hand.new(cards: cards)
-
+      hand = hand_from_string("TC Qc 7c 9c 8c")
       expect(hand.rank).to eq(HandRanks::FLUSH)
     end
 
     context "identifies straights" do
       it "ace-high" do
-	cards << Card.new("AH")
-	cards << Card.new("KC")
-	cards << Card.new("QC")
-	cards << Card.new("JC")
-	cards << Card.new("TC")
-
-	hand = Hand.new(cards: cards)
-
+	hand = hand_from_string("AH QC Kc tc JC")
 	expect(hand.rank).to eq(HandRanks::STRAIGHT)
       end
+
       it "ace-low" do
-	cards << Card.new("AH")
-	cards << Card.new("2C")
-	cards << Card.new("3C")
-	cards << Card.new("4C")
-	cards << Card.new("5C")
-
-	hand = Hand.new(cards: cards)
-
+	hand = hand_from_string("AH 3c 2C 5c 4C")
 	expect(hand.rank).to eq(HandRanks::STRAIGHT)
       end
     end
 
     it "identifies three of a kind" do
-      cards << Card.new("AH")
-      cards << Card.new("3C")
-      cards << Card.new("As")
-      cards << Card.new("5D")
-      cards << Card.new("AC")
-
-      hand = Hand.new(cards: cards)
-
+      hand = hand_from_string("AH 3C As 5D AC")
       expect(hand.rank).to eq(HandRanks::THREE_OF_A_KIND)
     end
 
     it "identifies two pair" do
-      cards << Card.new("AH")
-      cards << Card.new("3C")
-      cards << Card.new("As")
-      cards << Card.new("5D")
-      cards << Card.new("3s")
-
-      hand = Hand.new(cards: cards)
-
+      hand = hand_from_string("AH 3C As 5d 3S")
       expect(hand.rank).to eq(HandRanks::TWO_PAIR)
     end
 
     it "identifies pair" do
-      cards << Card.new("AH")
-      cards << Card.new("3C")
-      cards << Card.new("As")
-      cards << Card.new("5D")
-      cards << Card.new("4s")
-
-      hand = Hand.new(cards: cards)
-
+      hand = hand_from_string("AH 3C As 5d 4S")
       expect(hand.rank).to eq(HandRanks::PAIR)
     end
   end
@@ -137,9 +79,14 @@ describe Hand do
       pending "implement tiebreak logic"
     end
   end
-
-
-
-
 end
+
+def hand_from_string(card_string)
+  cards = []
+  card_string.split(" ").each do |card|
+    cards << Card.new(card)
+  end
+  Hand.new(cards: cards)
+end
+
 
