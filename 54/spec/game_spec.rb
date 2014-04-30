@@ -2,7 +2,7 @@ require 'spec_helper'
 
 describe Game do
   let(:five_cards) {cards = []; cards << Card.new('5H') << Card.new('6H') << Card.new('5C') << Card.new('5D') << Card.new('6C') }
-  let(:ten_cards) {cards = five_cards; cards << Card.new('7H') << Card.new('8H') << Card.new('7C') << Card.new('7D') << Card.new('7C') }
+  let(:ten_cards) {cards = five_cards; cards << Card.new('7H') << Card.new('8H') << Card.new('8C') << Card.new('7D') << Card.new('7C') }
 
   describe "#initialize" do
     context "makes one hand for every five cards passed in" do
@@ -25,6 +25,8 @@ describe Game do
 
 	it "makes two hands" do
 	  expect(game.hands.size).to eq(2)
+	  expect(game.hands[0].cards.size).to eq(5)
+	  expect(game.hands[1].cards.size).to eq(5)
 	end
 
 	it "correctly numbers hands" do
@@ -64,7 +66,6 @@ describe Game do
   describe "#winner?" do
     context "valid game" do
       it "returns the player number with the greatest ranking hand" do
-	pending "tiebreak logic"
 	game = Game.new(ten_cards)
 	expect(game.winner?).to eq(2)
       end

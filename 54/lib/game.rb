@@ -14,10 +14,12 @@ class Game
 
   def construct_hands(card_list)
     @hands = []
+    hand_cards = []
     card_list.each_with_index do |card, index|
-      if index % 5 == 0
-	hand_cards = card_list.slice(index-5,index)
-	@hands << Hand.new(cards: hand_cards , player_number: @hands.size+1)
+      hand_cards << card
+      if hand_cards.size == 5
+	@hands << Hand.new(cards: Array.new(hand_cards) , player_number: @hands.size+1)
+	hand_cards.clear
       end
     end
   end
