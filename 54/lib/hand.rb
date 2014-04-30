@@ -7,7 +7,12 @@ class Hand
 
   def initialize(cards:, player_number:-1)
     @player_number = player_number
+    validate(cards)
     @cards = cards
+  end
+
+  def validate(cards)
+
   end
 
   def rank

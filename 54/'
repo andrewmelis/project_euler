@@ -117,9 +117,9 @@ describe Hand do
 	end
 
 	it "announces ties" do
-	  player1 = hand_from_string("qC jc tc 9c 7c")
-	  player2 = hand_from_string("qH jh th 9h 7h")
-	  expect(player1 == player2).to be_true
+	  winner = hand_from_string("qC jc tc 9c 7c")
+	  loser = hand_from_string("qH jh th 9h 7h")
+	  expect(winner == loser).to be_true
 	end
       end
 
@@ -129,11 +129,11 @@ describe Hand do
 	  loser = hand_from_string("7H js th 9h 8h")
 	  expect(winner > loser).to be_true
 	end
-
+	
 	it "announces ties" do
-	  player1 = hand_from_string("qC jc tc 9s 8c")
-	  player2 = hand_from_string("qH js th 9h 8h")
-	  expect(player1 == player2).to be_true
+	  winner = hand_from_string("qC jc tc 9s 8c")
+	  loser = hand_from_string("qH js th 9h 8h")
+	  expect(winner == loser).to be_true
 	end
       end
 
@@ -157,11 +157,10 @@ describe Hand do
 	  loser = hand_from_string("AH Ac 8s TD th")
 	  expect(winner > loser).to be_true
 	end
-
 	it "breaks ties with kicker" do
-	  player1 = hand_from_string("As AD Ks js jc")
-	  player2 = hand_from_string("AH Ac 8s jD jh")
-	  expect(player1 > player2).to be_true
+	  winner = hand_from_string("As AD Ks js jc")
+	  loser = hand_from_string("AH Ac 8s jD jh")
+	  expect(winner > loser).to be_true
 	end
       end
 
@@ -192,11 +191,6 @@ describe Hand do
 	  expect(winner > loser).to be_true
 	end
 
-	it "announces ties" do
-	  player1 = hand_from_string("TH 9c Kd jD 4h")
-	  player2 = hand_from_string("Ts 9D Ks 4s jc")
-	  expect(player1 == player2).to be_true
-	end
 
       end
     end
