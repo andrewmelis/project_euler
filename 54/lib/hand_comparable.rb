@@ -1,14 +1,15 @@
-require 'hand_ranks'
+require_relative './hand_ranks'
 
 module HandComparable
   include Comparable
   include HandRanks
 
   def <=>(anOther)
-    if rank != anOther.rank   
-      return rank <=> anOther.rank
-    end
+    return rank <=> anOther.rank if rank != anOther.rank
+    break_ties(anOther)
+  end
 
+  def break_ties(anOther)
     case rank
     when STRAIGHT_FLUSH
       break_straight_flush(anOther)
@@ -99,7 +100,6 @@ module HandComparable
     list2 = list2.sort.reverse
     list1.sort.reverse.each_with_index do |item, index|
       if (item <=> list2[index]) != 0
-	#puts "#{item} v #{list2[index]}"
 	return item <=> list2[index]
       end
     end

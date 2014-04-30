@@ -1,4 +1,4 @@
-require 'hand_comparable'
+require_relative './hand_comparable'
 
 class Hand
   include HandComparable

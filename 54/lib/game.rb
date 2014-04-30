@@ -1,4 +1,9 @@
+require_relative './hand'
+require 'observer'
+
 class Game
+  include Observable
+
   attr_reader :hands
 
   def initialize(card_list)
@@ -26,7 +31,10 @@ class Game
 
   def winner?
     validate_game_size
-    @hands.max.player_number
+    winning_player_number = @hands.max.player_number
+    changed
+    notify_observers(winning_player_number)
+    winning_player_number
   end
 
   def validate_game_size
